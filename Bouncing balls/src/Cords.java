@@ -1,16 +1,20 @@
 import java.awt.Color;
-
+//These are the ball objects
 class Cords implements Runnable {
+	//Basic info, self explanatory
 	double x = 0;
 	double y = 0;
 	double rise;
 	double run;
+	//used these for changing colors when testing out collisions, doesnt really matter
 	Color c;
 	Color oc;
 	// Thread t = new Thread(this);
+	//setting boundaries
 	private static int maxX = 500;
 	private static int maxY = 500;
 	boolean freeze = false;
+	// used to prevent double collisions
 	boolean collided;
 
 	public int getX() {
@@ -38,29 +42,32 @@ class Cords implements Runnable {
 		y = ny;
 		c = cr;
 		oc = c;
-		if (ri == 0 || ru == 0) {
-			rise = ri;
-			run = ru;
-		} else {
-			rise = ri / gcd(ri, ru);
-			run = ru / gcd(ri, ru);
-		}
+		rise = ri;
+		run = ru;
+		//old code i just noticed, dk why i did all this
+//		if (ri == 0 || ru == 0) {
+//			rise = ri;
+//			run = ru;
+//		} else {
+//			//rise = ri / gcd(ri, ru);
+//			//run = ru / gcd(ri, ru);
+//		}
 	}
 
-	static int gcd(int a, int b) {
-		while (b > 0) {
-			int temp = b;
-			b = a % b; // % is remainder
-			a = temp;
-		}
-		return a;
-	}
+//	static int gcd(int a, int b) {
+//		while (b > 0) {
+//			int temp = b;
+//			b = a % b; // % is remainder
+//			a = temp;
+//		}
+//		return a;
+//	}
 
 	public void setCords(int nx, int ny) {
 		x = nx;
 		y = ny;
 	}
-
+//this method is run for every ball on every tick
 	public synchronized void run() {
 		// while (true) {
 		if (freeze)
