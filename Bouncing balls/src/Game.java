@@ -12,7 +12,7 @@ public class Game extends JPanel implements Runnable, MouseListener,
 	 */
 	private static final long serialVersionUID = 1L;
 	private static Random rand = new Random();// for finding random numbers
-	private Thread t = new Thread(this);
+	private Thread t = new Thread(this); // new thread for painting graphics loop
 	private int ncx; // these are for storing information from my
 	private int ncy; // mouse pressed events to pass to mouse released
 	private int nc;
@@ -50,7 +50,7 @@ public class Game extends JPanel implements Runnable, MouseListener,
 		addComponentListener(this);
 	}
 
-	@Override
+	@Override //This is where we display things on the screen
 	public void paint(Graphics g) {
 		super.paint(g);
 		Graphics2D ga = (Graphics2D) g;
@@ -83,7 +83,7 @@ public class Game extends JPanel implements Runnable, MouseListener,
 
 	public static void main(String[] args) {
 		Game g = new Game();
-		g.ph.cr[0] = new Cords(randInt(0, 500), randInt(0, 500), Color.RED,
+		g.ph.cr[0] = new Cords(randInt(0, 500), randInt(0, 500), Color.RED, // spawning a bunch of balls
 				randInt(-10, 10), randInt(-10, 10), 0);
 		g.ph.cr[1] = new Cords(randInt(0, 500), randInt(0, 500), Color.BLUE,
 				randInt(-10, 10), randInt(-10, 10), 1);
