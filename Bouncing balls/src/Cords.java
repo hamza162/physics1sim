@@ -1,7 +1,7 @@
 import java.awt.Color;
 //These are the ball objects
 class Cords implements Runnable {
-	//Basic info, self explanatory
+	//Basic info, self explanatory, keep in mind y is upside down, so rise is actually fall in our view
 	double x = 0;
 	double y = 0;
 	double rise;
@@ -69,37 +69,38 @@ class Cords implements Runnable {
 	}
 //this method is run for every ball on every tick
 	public synchronized void run() {
-		// while (true) {
-		if (freeze)
+		if (freeze) // dont do anything if frozen
 			return;
 		if (y <= 0) {
-			rise = Math.abs(rise);
-			if (y > 0) {
+			rise = Math.abs(rise); // reflect velocity up
+			if (y > 0) {//teleport back into bounds
 				y = 0;
 			}
 			//rise += 1;
-		} else if (y >= getMaxY()) {
-			rise = Math.abs(rise) * -1;
-			if (rise <= -4) {
+		} else if (y >= getMaxY()) { // this is when ball hits the floor
+			rise = Math.abs(rise) * -1; // reflect velocity down
+			// all this stuff is reactions to floor
+			
+			if (rise <= -4) { //changing rise so it loses velocity when it bounces
 				rise = rise / 1.3;
-			} else if (rise > -4 && rise > .5) {
+			} else if (rise > -4 && rise > .5) { //prevent bouncing forever
 				rise = rise + .5;
 			} else {
 				rise = 0;
 			}
-			if (run <= -0.03) {
+			if (run <= -0.03) { //friction
 				run = run + 0.03;
-			} else if (run > -0.03 && run < 0.03) {
+			} else if (run > -0.03 && run < 0.03) { // preventing screwy math
 				run = 0;
 			} else {
 				run = run - 0.03;
 			}
-			if (y > getMaxY()) {
+			if (y > getMaxY()) {//teleport back into bounds
 				y = getMaxY();
 			}
 		} else
-			rise += 1;
-		y = y + rise;
+			rise += 1; // gravity
+		y = y + rise; //move y
 
 		if (x <= 0) {
 			run = Math.abs(run);
@@ -109,9 +110,8 @@ class Cords implements Runnable {
 				x = getMaxX();
 			}
 		}
-		x = x + run;
-		// run++;
-		// }
+		x = x + run;//move x
+
 	}
 
 	public static int getMaxX() {
