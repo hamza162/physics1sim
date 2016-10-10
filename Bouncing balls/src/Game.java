@@ -10,6 +10,7 @@ public class Game extends JPanel implements Runnable, MouseListener,
 	/**
 	 * 
 	 */
+	//blah blah blah
 	private static final long serialVersionUID = 1L;
 	private static Random rand = new Random();// for finding random numbers
 	private Thread t = new Thread(this); // new thread for painting graphics loop
