@@ -20,7 +20,7 @@ public class Game extends JPanel implements Runnable, MouseListener,
 	private int[] line = new int[5]; // to store info about a line drawn when mouse is
 								// clicked and dragged
 	private JFrame j = new JFrame("Bounce");
-	int ballWidth = 30;
+	int ballWidth = 40;
 	private JSlider js = new JSlider(0, 200, 16);
 	Physics ph = new Physics();
 
@@ -30,10 +30,16 @@ public class Game extends JPanel implements Runnable, MouseListener,
 		j.setLayout(new BorderLayout());
 		j.add(this, BorderLayout.CENTER);
 		JButton bu = new JButton("Clear");
+		JButton bn = new JButton("Freeze");
 		bu.setBackground(Color.DARK_GRAY);
 		bu.setForeground(Color.WHITE);
+		bu.setActionCommand("Clear");
 		add(bu);
+		bn.setBackground(Color.DARK_GRAY);
+		bn.setForeground(Color.WHITE);
+		add(bn);
 		bu.addActionListener(ph);
+		bn.addActionListener(ph);
 		js.addChangeListener(this);
 		js.setMajorTickSpacing(100);
 		js.setMinorTickSpacing(10);
@@ -42,10 +48,8 @@ public class Game extends JPanel implements Runnable, MouseListener,
 		j.add(js, BorderLayout.SOUTH);
 		addMouseListener(this);
 		addMouseMotionListener(this);
-		
 		j.pack();
 		setBackground(Color.LIGHT_GRAY);
-		// j.setResizable(false);
 		j.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		j.setVisible(true);
 		addComponentListener(this);
@@ -103,7 +107,7 @@ public class Game extends JPanel implements Runnable, MouseListener,
 		while (true) {
 			repaint();
 			try {
-				Thread.sleep(15);
+				Thread.sleep(10);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -193,8 +197,8 @@ public class Game extends JPanel implements Runnable, MouseListener,
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		if (nc >= 0 && line[4] == 1 && MouseEvent.BUTTON1 == e.getButton()) {
-			ph.cr[nc].rise = (int) Math.ceil((e.getY() - ncy) / 6);
-			ph.cr[nc].run = (int) Math.ceil((e.getX() - ncx) / 6);
+			ph.cr[nc].rise = (int) Math.ceil((e.getY() - ncy) / 10);
+			ph.cr[nc].run = (int) Math.ceil((e.getX() - ncx) / 10);
 			ph.cr[nc].freeze = false;
 			line[4] = 0;
 		}

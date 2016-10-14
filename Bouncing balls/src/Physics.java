@@ -7,8 +7,9 @@ class Physics implements ActionListener {
 	Thread[] ta = new Thread[cr.length];
 	long rate = 15;
 	private boolean running = true;
+	private boolean frozen = false;
 
-	public boolean colliding(Cords cor) {
+	public boolean colliding(Cords cor) {  // TODO: move into same thread as movement
 		for (int z = 0; z < cr.length; z++) { // for every entity in cr
 			if (cr[z] != null && cor.id != z) { // make sure the entity isn't
 												// null, avoid
@@ -37,7 +38,10 @@ class Physics implements ActionListener {
 	}
 
 	synchronized void start() {
+		long beginTime, timeTaken;
 		while (running) {
+			beginTime = System.nanoTime();
+			if(!frozen){
 			for (int z = 0; z < cr.length; z++) { // for every entity in cr
 				if (cr[z] != null) { // make sure the entity isn't null, avoid
 					ta[z] = new Thread(cr[z]);
@@ -54,6 +58,21 @@ class Physics implements ActionListener {
 					}
 				}
 			}
+			timeTaken = System.nanoTime() - beginTime;
+			long timeLeft= ((rate*1000000L) - timeTaken);
+			if(timeLeft<0) timeLeft = 0;
+			try {
+				Thread.sleep(timeLeft/1000000L,(int) (timeLeft%1000000L));
+			} catch (InterruptedException e) {
+
+				e.printStackTrace();
+			}
+			if(timeLeft/1000000L < 11){
+				System.out.println(timeLeft/1000000L);
+				System.out.println(System.nanoTime() - beginTime);
+			}
+				
+		}else{
 			try {
 				Thread.sleep(rate);
 			} catch (InterruptedException e) {
@@ -61,13 +80,18 @@ class Physics implements ActionListener {
 				e.printStackTrace();
 			}
 		}
+		}
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		for (int z = 0; z < cr.length; z++) { // for every entity in cr
-			ta[z] = null;
-			cr[z] = null;
+		if(e.getActionCommand().equals("Clear")){
+			for (int z = 0; z < cr.length; z++) { // for every entity in cr
+				ta[z] = null;
+				cr[z] = null;
+			}
+		}else{
+			frozen = !frozen;
 		}
 	}
 }

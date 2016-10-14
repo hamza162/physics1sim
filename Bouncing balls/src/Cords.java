@@ -72,7 +72,7 @@ class Cords implements Runnable {
 		if (freeze) // dont do anything if frozen
 			return;
 		if (y <= 0) {
-			rise = Math.abs(rise); // reflect velocity up
+			rise = rise*-1; // reflect velocity up
 			if (y > 0) {//teleport back into bounds
 				y = 0;
 			}
@@ -99,7 +99,7 @@ class Cords implements Runnable {
 				y = getMaxY();
 			}
 		} else
-			rise += 1; // gravity
+			rise += 1; // gravity 
 		y = y + rise; //move y
 
 		if (x <= 0) {
