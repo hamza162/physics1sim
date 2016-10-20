@@ -14,8 +14,7 @@ class Cords implements Runnable {
 	private static int maxX = 500;
 	private static int maxY = 500;
 	boolean freeze = false;
-	// used to prevent double collisions
-	boolean collided;
+
 
 	public int getX() {
 		return (int) Math.round(x);
@@ -42,26 +41,10 @@ class Cords implements Runnable {
 		y = ny;
 		c = cr;
 		oc = c;
-		rise = ri;
-		run = ru;
-		//old code i just noticed, dk why i did all this
-//		if (ri == 0 || ru == 0) {
-//			rise = ri;
-//			run = ru;
-//		} else {
-//			//rise = ri / gcd(ri, ru);
-//			//run = ru / gcd(ri, ru);
-//		}
+		setRise(ri);
+		setRun(ru);
 	}
 
-//	static int gcd(int a, int b) {
-//		while (b > 0) {
-//			int temp = b;
-//			b = a % b; // % is remainder
-//			a = temp;
-//		}
-//		return a;
-//	}
 
 	public void setCords(int nx, int ny) {
 		x = nx;
@@ -99,7 +82,7 @@ class Cords implements Runnable {
 				y = getMaxY();
 			}
 		} else
-			rise += 1; // gravity 
+			rise += .2; // gravity 
 		y = y + rise; //move y
 
 		if (x <= 0) {
@@ -129,5 +112,19 @@ class Cords implements Runnable {
 	public static void setMaxY(int maxY) {
 		Cords.maxY = maxY;
 	}
+	public double getRise() {
+		return rise;
+	}
 
+	public void setRise(double rise) {
+		this.rise = rise;
+	}
+
+	public double getRun() {
+		return run;
+	}
+
+	public void setRun(double run) {
+		this.run = run;
+	}
 }

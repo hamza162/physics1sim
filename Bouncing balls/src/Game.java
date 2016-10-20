@@ -89,15 +89,15 @@ public class Game extends JPanel implements Runnable, MouseListener,
 	public static void main(String[] args) {
 		Game g = new Game();
 		g.ph.cr[0] = new Cords(randInt(0, 500), randInt(0, 500), Color.RED, // spawning a bunch of balls
-				randInt(-10, 10), randInt(-10, 10), 0);
+				randInt(-10, 10), randInt(-3, 3), 0);
 		g.ph.cr[1] = new Cords(randInt(0, 500), randInt(0, 500), Color.BLUE,
-				randInt(-10, 10), randInt(-10, 10), 1);
+				randInt(-10, 10), randInt(-3, 3), 1);
 		g.ph.cr[2] = new Cords(randInt(0, 500), randInt(0, 500), Color.GREEN,
-				randInt(-10, 10), randInt(-10, 10), 2);
+				randInt(-10, 10), randInt(-3, 3), 2);
 		g.ph.cr[3] = new Cords(randInt(0, 500), randInt(0, 500), Color.YELLOW,
-				randInt(-10, 10), randInt(-10, 10), 3);
+				randInt(-10, 10), randInt(-3, 3), 3);
 		g.ph.cr[4] = new Cords(randInt(0, 500), randInt(0, 500), Color.MAGENTA,
-				randInt(-10, 10), randInt(-10, 10), 4);
+				randInt(-10, 10), randInt(-3, 3), 4);
 		g.t.start();
 		g.ph.start();
 	}
@@ -197,8 +197,8 @@ public class Game extends JPanel implements Runnable, MouseListener,
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		if (nc >= 0 && line[4] == 1 && MouseEvent.BUTTON1 == e.getButton()) {
-			ph.cr[nc].rise = (int) Math.ceil((e.getY() - ncy) / 10);
-			ph.cr[nc].run = (int) Math.ceil((e.getX() - ncx) / 10);
+			ph.cr[nc].rise = (int) Math.ceil((e.getY() - ncy) / 18);
+			ph.cr[nc].run = (int) Math.ceil((e.getX() - ncx) / 18);
 			ph.cr[nc].freeze = false;
 			line[4] = 0;
 		}
